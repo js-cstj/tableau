@@ -6,11 +6,21 @@ export default class App {
 	/**
 	 * Méthode principale. Sera typiquement appelée après le chargement de la page.
 	 */
-	static async main() {
+	static async main() {}
+	/**
+	 * Méthode init. Charge un tableau avant le main.
+	 */
+	static async init() {
 		this.app = document.getElementById("app");
 		this.stats = await this.loadJson("stats.json");
 		this.app.appendChild(this.dom_create());
+		return this.stats;
 	}
+
+	/**
+	 * Retourne un tableau avec les données contenues dans this.stats
+	 * @returns {HTMLElement} Un élément table
+	 */
 	static dom_create() {
 		var resultat;
 		resultat = document.createElement("table");
@@ -21,6 +31,10 @@ export default class App {
 		resultat.appendChild(this.dom_tbody());
 		return resultat;
 	}
+	/**
+	 * Retourne un élément colgroup avec des col en fonction des données contenues dans this.stats.colonnes
+	 * @returns {HTMLElement} Un élément colgroup
+	 */
 	static dom_colgroup() {
 		var resultat;
 		resultat = document.createElement("colgroup");
@@ -36,6 +50,10 @@ export default class App {
 		}
 		return resultat;
 	}
+	/**
+	 * Retourne l'entête d'un tableau avec les données contenues dans this.stats.colonne
+	 * @returns {HTMLElement} Un élément thead
+	 */
 	static dom_thead() {
 		var resultat;
 		resultat = document.createElement("thead");
@@ -50,6 +68,11 @@ export default class App {
 		}
 		return resultat;
 	}
+
+	/**
+	 * Retourne le corps du tableau avec les données contenues dans this.stats.equipes
+	 * @returns {HTMLElement} Un élément tbody
+	 */
 	static dom_tbody() {
 		var resultat;
 		console.log(this.stats.colonnes);
@@ -63,6 +86,12 @@ export default class App {
 		}
 		return resultat;
 	}
+	/**
+	 * Retourne une cellule du tableau.
+	 * @param   {object}      colonne la description de la colonne
+	 * @param   {mixed}       contenu Le texte à mettre dans la cellule
+	 * @returns {HTMLElement} Un élément th ou td en fonction de la colonne
+	 */
 	static dom_cellule(colonne, contenu) {
 		var resultat;
 		if (colonne.th) {
@@ -79,6 +108,11 @@ export default class App {
 		resultat.appendChild(document.createTextNode(contenu));
 		return resultat;
 	}
+
+	/**
+	 * Charge un fichier JSON et retourne la promesse correspondante
+	 * @returns {HTMLElement} Un élément table
+	 */
 	static async loadJson(fic) {
 		return new Promise(resolve => {
 			var xhr = new XMLHttpRequest();
