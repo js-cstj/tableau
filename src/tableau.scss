@@ -35,7 +35,10 @@ table.stats {
 			position: relative;
 			padding-left: 1em;
 			padding-right: 1em;
+			cursor: pointer;
+			user-select: none;
 			&::after {
+				// font-size: smaller;
 				font-family: tri;
 				// color: var(--theme);
 				content:"A";

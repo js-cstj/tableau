@@ -32,6 +32,11 @@ table.stats thead th {
   position: relative;
   padding-left: 1em;
   padding-right: 1em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 table.stats thead th::after {
   font-family: tri;

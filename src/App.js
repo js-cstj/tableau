@@ -6,7 +6,27 @@ export default class App {
 	/**
 	 * Méthode principale. Sera typiquement appelée après le chargement de la page.
 	 */
-	static async main() {}
+	static async main() {
+		this.stats = document.querySelector("table.stats");
+		var labels = document.querySelectorAll("table.stats>thead th");
+		labels.forEach((label) => {
+			label.addEventListener("click", e => {
+				if (e.currentTarget.classList.contains("asc")) {
+					e.currentTarget.classList.remove("asc");
+					e.currentTarget.classList.add("desc");
+				} else if (e.currentTarget.classList.contains("desc")) {
+					e.currentTarget.classList.remove("desc");
+					e.currentTarget.classList.add("asc");
+				} else {
+					e.currentTarget.parentNode.querySelectorAll(".asc, .desc").forEach(element => {
+						element.classList.remove("asc");
+						element.classList.remove("desc");
+					});
+					e.currentTarget.classList.add("asc");
+				}
+			});
+		});
+	}
 	/**
 	 * Méthode init. Charge un tableau avant le main.
 	 */
