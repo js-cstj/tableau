@@ -1,3 +1,11 @@
+:root {
+	--theme-hue: 195;
+	--theme-sat: 53%;
+	--theme-lum: 79%;
+	--theme: hsl(var(--theme-hue), var(--theme-sat), var(--theme-lum));
+	--theme-fonce: hsl(var(--theme-hue), var(--theme-sat), calc(var(--theme-lum) / 3));
+	--theme-pale: hsl(var(--theme-hue), var(--theme-sat), calc(2 * 100% + var(--theme-lum) / 3));
+}
 html {
 	height: 100%;
 	font-size: 16px;

@@ -1,0 +1,59 @@
+@font-face {
+	src: url(../images/fonts/Glyphter.ttf);
+	font-family: tri;
+	font-weight: bold;
+}
+:root {
+	--theme-hue: 195;
+	// --theme: hsl(var(--theme-hue), 53%, 79%);
+	// --theme-fonce: hsl(var(--theme-hue), 53%, 27%);
+	// --theme-pale: hsl(var(--theme-hue), 53%, 94%);
+}
+table.stats {
+	border-collapse: collapse;
+	background-color: var(--theme);
+	&, thead , tfoot {
+		border: 2px solid var(--theme-fonce);
+	}
+	th, td {
+		padding: .25em 1ch;
+		// border: 1px solid var(--theme-fonce);
+	}
+	tbody {
+		& > tr:nth-child(3n) {
+			background-color: rgba(0,0,0,.1);
+		}
+		& > tr:nth-child(3n+1) {
+			background-color: rgba(255,255,255,.4);
+		}
+	}
+	thead {
+		background-color: var(--theme-fonce);
+		color: var(--theme-pale);
+		font-size: smaller;
+		& th {
+			position: relative;
+			padding-left: 1em;
+			padding-right: 1em;
+			&::after {
+				font-family: tri;
+				// color: var(--theme);
+				content:"A";
+				position: absolute;
+				right: 0;
+			}
+			&.asc::after {
+				content:"B";
+			}
+			&.desc::after {
+				content:"C";
+			}
+			&:not(:hover)::after {
+				opacity: .5;
+			}
+		}
+	}
+	th[scope=row] {
+		white-space: nowrap;
+	}
+}

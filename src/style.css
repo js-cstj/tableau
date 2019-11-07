@@ -1,3 +1,12 @@
+:root {
+  --theme-hue: 195;
+  --theme-sat: 53%;
+  --theme-lum: 79%;
+  --theme: hsl(var(--theme-hue), var(--theme-sat), var(--theme-lum));
+  --theme-fonce: hsl(var(--theme-hue), var(--theme-sat), calc(var(--theme-lum) / 3));
+  --theme-pale: hsl(var(--theme-hue), var(--theme-sat), calc(2 * 100% + var(--theme-lum) / 3));
+}
+
 html {
   height: 100%;
   font-size: 16px;
@@ -19,12 +28,11 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-
 #interface > header, #interface > footer {
   -webkit-box-flex: 0;
       -ms-flex: 0 1 auto;
           flex: 0 1 auto;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   background-color: #EEE;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -33,24 +41,20 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-
 #interface > header {
   -webkit-box-ordinal-group: -999;
       -ms-flex-order: -1000;
           order: -1000;
 }
-
 #interface > header h1 {
   margin: 0;
 }
-
 #interface > footer {
   -webkit-box-ordinal-group: 1001;
       -ms-flex-order: 1000;
           order: 1000;
   font-size: smaller;
 }
-
 #interface > .body {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
@@ -69,4 +73,3 @@ body {
       -ms-flex-align: center;
           align-items: center;
 }
-/*# sourceMappingURL=style.css.map */
