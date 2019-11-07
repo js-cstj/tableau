@@ -51,7 +51,7 @@ table.stats {
 			&.desc::after {
 				content:"C";
 			}
-			&:not(:hover)::after {
+			&:not(:hover):not(.asc):not(.desc)::after {
 				opacity: .5;
 			}
 		}
