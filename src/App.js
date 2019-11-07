@@ -7,10 +7,14 @@ export default class App {
 	 * Méthode principale. Sera typiquement appelée après le chargement de la page.
 	 */
 	static async main() {
+	}
+	static async init() {
 		this.app = document.getElementById("app");
 		this.stats = await this.loadJson("stats.json");
 		this.app.appendChild(this.dom_create());
+		return this.stats;
 	}
+
 	static dom_create() {
 		var resultat;
 		resultat = document.createElement("table");
