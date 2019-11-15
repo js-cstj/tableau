@@ -36,7 +36,7 @@ export default class App {
 		
 		// Affiche les noms de toutes les équipes
 		lesTrs.forEach(leTr => {
-			console.log("---------- Le---------- nom", leTr.equipe.nom);
+			console.log("---------- Le nom ----------", leTr.equipe.nom);
 		});
 		
 		// Crée un tableau avec les noms
