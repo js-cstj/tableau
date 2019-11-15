@@ -5,6 +5,9 @@
 }
 :root {
   --theme-hue: 195;
+  --theme: hsl(var(--theme-hue), 53%, 79%);
+  --theme-fonce: hsl(var(--theme-hue), 53%, 27%);
+  --theme-pale: hsl(var(--theme-hue), 53%, 94%);
 }
 
 table.stats {
@@ -38,20 +41,10 @@ table.stats thead th {
       -ms-user-select: none;
           user-select: none;
 }
-table.stats thead th::after {
+table.stats thead th span:last-child {
   font-family: tri;
-  content: "A";
   position: absolute;
   right: 0;
-}
-table.stats thead th.asc::after {
-  content: "B";
-}
-table.stats thead th.desc::after {
-  content: "C";
-}
-table.stats thead th:not(:hover):not(.asc):not(.desc)::after {
-  opacity: 0.5;
 }
 table.stats th[scope=row] {
   white-space: nowrap;

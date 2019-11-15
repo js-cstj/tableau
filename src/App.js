@@ -8,24 +8,95 @@ export default class App {
 	 */
 	static async main() {
 		this.stats = document.querySelector("table.stats");
-		var labels = document.querySelectorAll("table.stats>thead th");
-		labels.forEach((label) => {
-			label.addEventListener("click", e => {
-				if (e.currentTarget.classList.contains("asc")) {
-					e.currentTarget.classList.remove("asc");
-					e.currentTarget.classList.add("desc");
-				} else if (e.currentTarget.classList.contains("desc")) {
-					e.currentTarget.classList.remove("desc");
-					e.currentTarget.classList.add("asc");
-				} else {
-					e.currentTarget.parentNode.querySelectorAll(".asc, .desc").forEach(element => {
-						element.classList.remove("asc");
-						element.classList.remove("desc");
+		var lesLabels = Array.from(document.querySelectorAll("table.stats>thead th"));
+		lesLabels.forEach((unLabel) => {
+			var span = unLabel.appendChild(document.createElement("span"));
+			span.innerHTML = "A";
+			unLabel.addEventListener("click", e => {
+				var span = e.currentTarget.lastElementChild;
+				if (span.innerHTML === "A") {
+					var lesSpans = Array.from(document.querySelectorAll("table.stats>thead th>span:last-child"));
+					lesSpans.forEach((unSpan) => {
+						unSpan.innerHTML = "A";
 					});
-					e.currentTarget.classList.add("asc");
+					span.innerHTML = "B";
+				} else if (span.innerHTML === "B") {
+					span.innerHTML = "C";
+				} else if (span.innerHTML === "C") {
+					span.innerHTML = "B";
 				}
 			});
 		});
+		//this.lesExemples();
+	}
+	static lesExemples() {
+		// Récupère les éléments tr
+		var lesTrs = Array.from(document.querySelectorAll("table.stats>tbody>tr"));
+		console.log("---------- LesTrs ----------", lesTrs);
+		
+		// Affiche les noms de toutes les équipes
+		lesTrs.forEach(leTr => {
+			console.log("---------- Le---------- nom", leTr.equipe.nom);
+		});
+		
+		// Crée un tableau avec les noms
+		var lesNoms = lesTrs.map(leTr => {
+			return leTr.equipe.nom;
+		});
+		console.log("---------- lesNoms ----------", lesNoms);
+		
+		// Garde les éléments tr des "bonnes" équipes
+		var lesBonnes = lesTrs.filter(unTr => {
+			if (unTr.equipe.pc_pts >= 0.5) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		console.log("---------- lesBonnes ----------", lesBonnes);
+		
+		// Un tableau avec les noms des bonnes équipes
+		var lesBonsNoms = lesBonnes.map(leTr => {
+			return leTr.equipe.nom;
+		});
+		console.log("---------- lesBonsNoms ----------", lesBonsNoms);
+		
+		// Tri simple d'un tableau
+		var lesMots = ["réussit", "on", "du", "dynamisme", "tout", "avec", ];
+		lesMots.sort();
+		console.log("---------- lesMots ----------", lesMots);
+		
+		// Tri en ordre de longueur de mot
+		var motsCopie = Array.from(lesMots);
+		motsCopie.sort((motA, motB) => {
+			if (motA.length > motB.length) {
+				return 1;
+			} else if (motA.length < motB.length) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		console.log("---------- motsCopie ----------", motsCopie);
+		
+		// Tri des éléments tr en ordre de nom
+		var trsCopie = Array.from(lesTrs);
+		trsCopie.sort((trA, trB) => {
+			if (trA.equipe.nom > trB.equipe.nom) {
+				return 1;
+			} else if (trA.equipe.nom < trB.equipe.nom) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		console.log("---------- trsCopie ----------", trsCopie);
+
+		// Un tableau avec les noms des équipes en ordre
+		var lesNomsTries = trsCopie.map(leTr => {
+			return leTr.equipe.nom;
+		});
+		console.log("---------- lesNomsTries ----------", lesNomsTries);
 	}
 	/**
 	 * Méthode init. Charge un tableau avant le main.
@@ -84,7 +155,6 @@ export default class App {
 			cellule.setAttribute("title", colonne.titre);
 			cellule.setAttribute("data-for", k);
 			cellule.appendChild(document.createTextNode(colonne.label));
-			cellule.appendChild(document.createElement("span"));
 		}
 		return resultat;
 	}
@@ -100,6 +170,7 @@ export default class App {
 		for (let k in this.stats.equipes) {
 			var equipe = this.stats.equipes[k];
 			var rangee = resultat.appendChild(document.createElement("tr"));
+			rangee.equipe = equipe;
 			for (let c in this.stats.colonnes) {
 				rangee.appendChild(this.dom_cellule(this.stats.colonnes[c], equipe[c]));
 			}

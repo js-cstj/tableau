@@ -5,9 +5,9 @@
 }
 :root {
 	--theme-hue: 195;
-	// --theme: hsl(var(--theme-hue), 53%, 79%);
-	// --theme-fonce: hsl(var(--theme-hue), 53%, 27%);
-	// --theme-pale: hsl(var(--theme-hue), 53%, 94%);
+	--theme: hsl(var(--theme-hue), 53%, 79%);
+	--theme-fonce: hsl(var(--theme-hue), 53%, 27%);
+	--theme-pale: hsl(var(--theme-hue), 53%, 94%);
 }
 table.stats {
 	border-collapse: collapse;
@@ -37,23 +37,26 @@ table.stats {
 			padding-right: 1em;
 			cursor: pointer;
 			user-select: none;
-			&::after {
-				// font-size: smaller;
+			span:last-child {
 				font-family: tri;
-				// color: var(--theme);
-				content:"A";
 				position: absolute;
 				right: 0;
 			}
-			&.asc::after {
-				content:"B";
-			}
-			&.desc::after {
-				content:"C";
-			}
-			&:not(:hover):not(.asc):not(.desc)::after {
-				opacity: .5;
-			}
+			// &::after {
+			// 	font-family: tri;
+			// 	content:"A";
+			// 	position: absolute;
+			// 	right: 0;
+			// }
+			// &.asc::after {
+			// 	content:"B";
+			// }
+			// &.desc::after {
+			// 	content:"C";
+			// }
+			// &:not(:hover):not(.asc):not(.desc)::after {
+			// 	opacity: .5;
+			// }
 		}
 	}
 	th[scope=row] {
