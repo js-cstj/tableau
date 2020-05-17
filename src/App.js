@@ -25,9 +25,32 @@ export default class App {
 				} else if (span.innerHTML === "C") {
 					span.innerHTML = "B";
 				}
+				this.trier(e.currentTarget.getAttribute("data-for"), span.innerHTML === "B");
 			});
 		});
 		//this.lesExemples();
+	}
+	static trier(champ, ordre) {
+		var lesTrs = Array.from(document.querySelectorAll("table.stats>tbody>tr"));
+		lesTrs.sort((trA, trB) => {
+			if (trA.equipe[champ] > trB.equipe[champ]) {
+				return 1;
+			} else if (trA.equipe[champ] < trB.equipe[champ]) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		if (ordre === true) {
+			lesTrs.forEach(leTr => {
+				leTr.parentNode.appendChild(leTr);
+			});
+		} else {
+			lesTrs.forEach(leTr => {
+				leTr.parentNode.insertBefore(leTr, leTr.parentNode.firstChild);
+			});
+		}
+		console.log(lesTrs);
 	}
 	static lesExemples() {
 		// Récupère les éléments tr
