@@ -6,40 +6,39 @@ export default class App {
 	/**
 	 * Méthode principale. Sera typiquement appelée après le chargement de la page.
 	 */
-	static async main() {}
-	/**
-	 * Méthode init. Charge un tableau avant le main.
-	 */
-	static async init() {
+	static async main() {
 		this.app = document.getElementById("app");
-		this.stats = await this.loadJson("stats.json");
-		this.app.appendChild(this.dom_create());
-		return this.stats;
+		this.loadJson("stats.json").then((stats) => {
+			this.app.appendChild(this.dom_create(stats));
+			return stats;
+		});
 	}
 
 	/**
-	 * Retourne un tableau avec les données contenues dans this.stats
+	 * Retourne un tableau avec les données contenues dans stats
+	 * @param {object} stats L'ensemble des stats incluanr les colonnes et les equipes
 	 * @returns {HTMLElement} Un élément table
 	 */
-	static dom_create() {
+	static dom_create(stats) {
 		var resultat;
 		resultat = document.createElement("table");
 		resultat.classList.add("stats");
-		resultat.appendChild(this.dom_colgroup());
-		resultat.appendChild(this.dom_thead());
+		resultat.appendChild(this.dom_colgroup(stats.colonnes));
+		resultat.appendChild(this.dom_thead(stats.colonnes));
 		resultat.setAttribute("border", "1");
-		resultat.appendChild(this.dom_tbody());
+		resultat.appendChild(this.dom_tbody(stats.colonnes, stats.equipes));
 		return resultat;
 	}
 	/**
-	 * Retourne un élément colgroup avec des col en fonction des données contenues dans this.stats.colonnes
+	 * Retourne un élément colgroup avec des col en fonction des données contenues dans colonnes
+	 * @param {object} colonnes La description de chaque colonne à créer
 	 * @returns {HTMLElement} Un élément colgroup
 	 */
-	static dom_colgroup() {
+	static dom_colgroup(colonnes) {
 		var resultat;
 		resultat = document.createElement("colgroup");
-		for (let k in this.stats.colonnes) {
-			var colonne = this.stats.colonnes[k];
+		for (let k in colonnes) {
+			var colonne = colonnes[k];
 			var col = resultat.appendChild(document.createElement("col"));
 			col.setAttribute("id", "col-" + k);
 			if (colonne.styleCol) {
@@ -51,15 +50,16 @@ export default class App {
 		return resultat;
 	}
 	/**
-	 * Retourne l'entête d'un tableau avec les données contenues dans this.stats.colonne
-	 * @returns {HTMLElement} Un élément thead
+	 * Retourne l'entête d'un tableau avec les données contenues dans colonnes
+	 	* @param {object} colonnes La description de chaque colonne à créer
+		* @returns {HTMLElement} Un élément thead
 	 */
-	static dom_thead() {
+	static dom_thead(colonnes) {
 		var resultat;
 		resultat = document.createElement("thead");
 		var rangee = resultat.appendChild(document.createElement("tr"));
-		for (let k in this.stats.colonnes) {
-			var colonne = this.stats.colonnes[k];
+		for (let k in colonnes) {
+			var colonne = colonnes[k];
 			var cellule = rangee.appendChild(document.createElement("th"));
 			cellule.setAttribute("title", colonne.titre);
 			cellule.setAttribute("data-for", k);
@@ -70,18 +70,17 @@ export default class App {
 	}
 
 	/**
-	 * Retourne le corps du tableau avec les données contenues dans this.stats.equipes
+	 * Retourne le corps du tableau avec les données contenues dans colonnes et equipes
 	 * @returns {HTMLElement} Un élément tbody
 	 */
-	static dom_tbody() {
+	static dom_tbody(colonnes, equipes) {
 		var resultat;
-		console.log(this.stats.colonnes);
 		resultat = document.createElement("tbody");
-		for (let k in this.stats.equipes) {
-			var equipe = this.stats.equipes[k];
+		for (let k in equipes) {
+			var equipe = equipes[k];
 			var rangee = resultat.appendChild(document.createElement("tr"));
-			for (let c in this.stats.colonnes) {
-				rangee.appendChild(this.dom_cellule(this.stats.colonnes[c], equipe[c]));
+			for (let c in colonnes) {
+				rangee.appendChild(this.dom_cellule(colonnes[c], equipe[c]));
 			}
 		}
 		return resultat;
@@ -129,6 +128,8 @@ export default class App {
 	 * @returns {Promise} La promesse qui sera résolue après chargement
 	 */
 	static load() {
+	}
+	static init() {
 		return new Promise(resolve => {
 			window.addEventListener("load", () => {
 				resolve();
@@ -136,3 +137,6 @@ export default class App {
 		});
 	}
 }
+App.init().then(() => {
+	App.main();
+});
